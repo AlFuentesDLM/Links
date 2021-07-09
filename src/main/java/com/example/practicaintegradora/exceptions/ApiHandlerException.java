@@ -34,4 +34,13 @@ public class ApiHandlerException {
     public  ErrorMessage handleValidation(ConstraintViolationException ex){
         return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), ex.getLocalizedMessage());
     }
+
+    @ExceptionHandler
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorMessage handleUnauthorizedException(UnauthorizedException ex){
+        return new ErrorMessage(HttpStatus.UNAUTHORIZED.value(), ex.ERROR);
+    }
+
+
 }

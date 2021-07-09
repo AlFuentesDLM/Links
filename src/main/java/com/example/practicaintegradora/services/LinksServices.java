@@ -4,8 +4,11 @@ import com.example.practicaintegradora.dtos.request.LinkDtoRequest;
 import com.example.practicaintegradora.dtos.response.LinkDto;
 import com.example.practicaintegradora.dtos.response.MetricDto;
 import com.example.practicaintegradora.exceptions.LinkNotValidException;
+import com.example.practicaintegradora.exceptions.NoPasswordWasGiven;
+import com.example.practicaintegradora.exceptions.UnauthorizedException;
 import com.example.practicaintegradora.repository.LinkRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -62,10 +65,27 @@ public class LinksServices {
         return link;
     }
 
+    public LinkDto getRedirect(String uuid,String password){
+        var link = linkRepository.getById(uuid);
+        if(link.isValid()){
+            if (link.getPassword().equals(password)){
+                return link;
+            }else{
+                throw new UnauthorizedException();
+            }
+
+        }else{
+            throw new LinkNotValidException("Link is not valid",link);
+        }
+    }
     public LinkDto getRedirect(String uuid){
         var link = linkRepository.getById(uuid);
         if(link.isValid()){
-            return link;
+            if (link.getPassword().equals("") || link.getPassword() == null){
+                return link;
+            }else {
+                throw new NoPasswordWasGiven();
+            }
         }else{
             throw new LinkNotValidException("Link is not valid",link);
         }

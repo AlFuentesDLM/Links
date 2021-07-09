@@ -11,6 +11,6 @@ public class LinkNotValidException extends RuntimeException{
 
     @Override
     public String getMessage() {
-        return "The following link isn't a valid link: "+link.getUrl();
+        return "the following link is invalidated, by the user or by the system: "+link.getUrl();
     }
 }

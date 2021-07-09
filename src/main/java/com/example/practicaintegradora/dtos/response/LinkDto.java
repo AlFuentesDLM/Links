@@ -10,6 +10,7 @@ public class LinkDto {
     private String url;
     private boolean isValid;
     private int counter;
+    private String password;
 
     public LinkDto(String id, String name, String url, boolean isValid) {
         this.id = id;
@@ -17,5 +18,15 @@ public class LinkDto {
         this.url = url;
         this.isValid = isValid;
         this.counter = 0;
+        this.password = "";
+    }
+
+    public LinkDto(String id, String name, String url, boolean isValid, String password) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.isValid = isValid;
+        this.counter = 0;
+        this.password = password;
     }
 }

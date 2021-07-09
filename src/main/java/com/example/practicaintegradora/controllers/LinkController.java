@@ -24,26 +24,36 @@ public class LinkController {
     }
 
     @PostMapping(path = "/link")
-    public ResponseEntity<LinkDto> addLink(@RequestBody LinkDtoRequest link){
+    public ResponseEntity<LinkDto> addLink(@RequestBody LinkDtoRequest link) {
         return new ResponseEntity<>(linksServices.addNewLink(link), HttpStatus.OK);
     }
+
     @GetMapping(path = "/link")
-    public ResponseEntity<List<LinkDto>> getAllLinks(){
-        return new ResponseEntity<>(linksServices.getAllLinks(),HttpStatus.OK);
+    public ResponseEntity<List<LinkDto>> getAllLinks() {
+        return new ResponseEntity<>(linksServices.getAllLinks(), HttpStatus.OK);
     }
+
     @GetMapping("/link/{linkId}")
-    public RedirectView getAndRedirect(@NotNull @Size(min = 36, max = 36) @PathVariable String linkId){
-        var link = linksServices.getRedirect(linkId);
+    public RedirectView getAndRedirect(@NotNull @Size(min = 36, max = 36) @PathVariable String linkId,
+                                       @RequestParam(name = "password", defaultValue = "") String password) {
+        LinkDto link;
+        System.out.println(password);
+        if (password == "") {
+            link = linksServices.getRedirect(linkId);
+        } else {
+            link = linksServices.getRedirect(linkId, password);
+        }
         linksServices.addCounter(link);
         return new RedirectView(link.getUrl());
     }
+
     @GetMapping(path = "/metrics/{linkId}")
-    public ResponseEntity<MetricDto> getMetrics( @NotNull @Size(min = 36, max = 36) @PathVariable String linkId){
-        return new ResponseEntity<>(linksServices.getMetrics(linkId),HttpStatus.OK);
+    public ResponseEntity<MetricDto> getMetrics(@NotNull @Size(min = 36, max = 36) @PathVariable String linkId) {
+        return new ResponseEntity<>(linksServices.getMetrics(linkId), HttpStatus.OK);
     }
 
     @PatchMapping(path = "/invalidate/{linkId}")
-    public ResponseEntity<LinkDto> invalidateLink( @NotNull @Size(min = 36, max = 36) @PathVariable String linkId){
-        return new ResponseEntity<>(linksServices.invalidateUrl(linkId),HttpStatus.OK);
+    public ResponseEntity<LinkDto> invalidateLink(@NotNull @Size(min = 36, max = 36) @PathVariable String linkId) {
+        return new ResponseEntity<>(linksServices.invalidateUrl(linkId), HttpStatus.OK);
     }
 }

@@ -41,7 +41,12 @@ public class LinkRepository implements CRUD<LinkDto,LinkDtoRequest> {
     @Override
     public LinkDto addNew(LinkDtoRequest obj) {
         var uuid = UUID.randomUUID();
-        var link = new LinkDto(uuid.toString(),obj.getName(), obj.getUrl(), true);
+        LinkDto link;
+        if (obj.getPassword() == null){
+            link = new LinkDto(uuid.toString(),obj.getName(), obj.getUrl(), true);
+        }else{
+            link = new LinkDto(uuid.toString(),obj.getName(), obj.getUrl(), true,obj.getPassword());
+        }
         links.add(link);
         return link;
     }
