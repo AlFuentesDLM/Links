@@ -1,6 +1,5 @@
 package com.example.practicaintegradora.dtos.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

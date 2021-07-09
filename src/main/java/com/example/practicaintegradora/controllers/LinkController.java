@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @Validated
 public class LinkController {
-    private LinksServices linksServices;
+    private final LinksServices linksServices;
 
     public LinkController(LinksServices linksServices) {
         this.linksServices = linksServices;
@@ -38,7 +38,7 @@ public class LinkController {
                                        @RequestParam(name = "password", defaultValue = "") String password) {
         LinkDto link;
         System.out.println(password);
-        if (password == "") {
+        if (password.equals("")) {
             link = linksServices.getRedirect(linkId);
         } else {
             link = linksServices.getRedirect(linkId, password);

@@ -52,11 +52,6 @@ public class LinkRepository implements CRUD<LinkDto,LinkDtoRequest> {
     }
 
     @Override
-    public boolean removeOneById(String id) {
-        return false;
-    }
-
-    @Override
     public LinkDto update(LinkDto link) {
         try {
             var index = links.indexOf(link);

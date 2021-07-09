@@ -8,7 +8,6 @@ import com.example.practicaintegradora.exceptions.NoPasswordWasGiven;
 import com.example.practicaintegradora.exceptions.UnauthorizedException;
 import com.example.practicaintegradora.repository.LinkRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.net.URI;
 import java.net.http.HttpClient;
